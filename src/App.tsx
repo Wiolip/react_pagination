@@ -3,6 +3,7 @@ import './App.css';
 import { getNumbers } from './utils';
 import { Pagination } from './components/Pagination';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const items = getNumbers(1, 42).map(n => `Item ${n}`);
 
 export const App: React.FC = () => {
@@ -23,12 +24,21 @@ export const App: React.FC = () => {
 
   return (
     <div className="container">
+      {/* Nagłówek */}
       <h1>Items with Pagination</h1>
 
-      <div className="form-group row">
+      {/* Informacja o stronie */}
+      <p className="lead" data-cy="info">
+        Page {currentPage} (items {startIndex + 1} -{' '}
+        {Math.min(currentPage * perPage, items.length)} of {items.length})
+      </p>
+
+      {/* PerPage selector */}
+      <div className="form-group row mb-3">
         <div className="col-3 col-sm-2 col-xl-1">
           <select
             data-cy="perPageSelector"
+            id="perPageSelector"
             className="form-control"
             value={perPage}
             onChange={handlePerPageChange}
@@ -45,6 +55,7 @@ export const App: React.FC = () => {
         </label>
       </div>
 
+      {/* Paginacja */}
       <Pagination
         total={items.length}
         perPage={perPage}
@@ -52,7 +63,8 @@ export const App: React.FC = () => {
         onPageChange={handlePageChange}
       />
 
-      <ul>
+      {/* Lista elementów */}
+      <ul className="mt-3">
         {paginatedItems.map(item => (
           <li key={item} data-cy="item">
             {item}
